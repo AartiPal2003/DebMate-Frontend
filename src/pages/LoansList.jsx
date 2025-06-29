@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api";
 
 const LoansList = () => {
   const [loans, setLoans] = useState([]);
@@ -12,7 +13,7 @@ const LoansList = () => {
 
   const fetchLoans = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/loans");
+      const res = await api.get("/api/loans");
       setLoans(res.data);
       console.log("Fetched loans ->", res.data);
     } catch (err) {
@@ -32,7 +33,7 @@ const LoansList = () => {
     }
 
     try {
-      await axios.patch(`http://localhost:5000/api/loans/${loanId}/repay`, { amount });
+      await api.patch(`/api/loans/${loanId}/repay`, { amount });
       alert("✅ Repayment added!");
       fetchLoans();
       setRepayAmounts((prev) => ({ ...prev, [loanId]: "" }));
@@ -47,7 +48,7 @@ const LoansList = () => {
     if (!confirm) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/loans/${loanId}`);
+      await api.delete(`/api/loans/${loanId}`);
       alert("🗑️ Loan deleted!");
       fetchLoans();
     } catch (err) {

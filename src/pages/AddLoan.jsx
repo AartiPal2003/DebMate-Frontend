@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+
+import api from "../api";
 
 const AddLoan = () => {
   const [formData, setFormData] = useState({
@@ -44,7 +45,7 @@ const AddLoan = () => {
   };
 
   try {
-    const res = await axios.post("http://localhost:5000/api/loans/add-loan", payload);
+    await api.post("/api/loans/add-loan", payload);
     setMessage("✅ Loan added successfully!");
     setFormData({
       lender: "",
